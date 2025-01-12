@@ -1,0 +1,63 @@
+<p-sidebar [(visible)]="display" transitionOptions="300ms cubic-bezier(0, 0, 0.2, 1)" [modal]="false" appendTo="body" (onShow)="openNavbar()" (onHide)="closeNavbar()">
+  <ng-template pTemplate="header">Hephaesteus</ng-template>
+  <ng-template pTemplate="content">
+    <div class="grid">
+<!--    <div class="col-12 md:col-12 lg:col-12 mt-3">-->
+<!--      <button pButton [routerLink]="['/home']" type="button" label="Home" icon="pi pi-home"  class="p-button-text "></button>-->
+<!--    </div>-->
+      <div class="col-12 md:col-12 lg:col-12">
+        <button pButton [routerLink]="['/clothes']"  type="button" label="Clothes" icon="pi pi-shopping-bag" class="p-button-text"></button>
+      </div>
+      <div class="col-12 md:col-12 lg:col-12">
+        <button pButton [routerLink]="['/outfits']"  type="button" label="Outfits" icon="pi pi-heart-fill" class="p-button-text"></button>
+      </div>
+      <div class="col-12 md:col-12 lg:col-12">
+        <button pButton [routerLink]="['/outfits-creator']"  type="button" label="Outfit creator" icon="pi pi-plus" class="p-button-text"></button>
+      </div>
+      <div class="col-12 md:col-12 lg:col-12" *ngIf="isAdmin">
+        <button pButton [routerLink]="['/admin']" type="button" label="Admin Dasboard" icon="pi pi-table" class="p-button-text"></button>
+      </div>
+      <div class="col-12 md:col-12 lg:col-12">
+        <button pButton [routerLink]="['/about']" type="button" label="About" icon="pi pi-info-circle" class="p-button-text"></button>
+      </div>
+
+    </div>
+  </ng-template>
+   <ng-template pTemplate="footer">
+     <div class="grid">
+        <div class="col-12 md:col-12 lg:col-12">
+          <span>{{this.username}}</span>
+        </div>
+       <div class="col-12 md:col-12 lg:col-12">
+         <p-button label="Logout" icon="pi pi-sign-out" (onClick)="logoutEventEmit()"></p-button>
+       </div>
+     </div>
+   </ng-template>
+</p-sidebar>
+<div *ngIf="!display" class="" style="position: fixed; left: 0; height:100%; top: 0; width: 2.5rem; margin-top: 1rem; margin-left: 1rem">
+  <div class="grid">
+    <p-button type="button" (click)="display = true" icon="pi pi-bars" label=""></p-button>
+  </div>
+<!--  <div class="grid mt-1">-->
+<!--    <button pButton [routerLink]="['/home']" type="button" label="" icon="pi pi-home"  class="p-button-text "></button>-->
+<!--  </div>-->
+  <div class="grid mt-1">
+    <button pButton [routerLink]="['/clothes']"  type="button" label="" icon="pi pi-shopping-bag" class="p-button-text"></button>
+  </div>
+  <div class="grid mt-1">
+    <button pButton [routerLink]="['/outfits']"  type="button" label="" icon="pi pi-heart-fill" class="p-button-text"></button>
+  </div>
+  <div class="grid mt-1">
+    <button pButton [routerLink]="['/outfits-creator']"  type="button" label="" icon="pi pi-plus" class="p-button-text"></button>
+  </div>
+  <div class="grid mt-1" *ngIf="isAdmin">
+    <button pButton [routerLink]="['/admin']" type="button" label="" icon="pi pi-table" class="p-button-text"></button>
+  </div>
+  <div class="grid mt-1">
+    <button pButton [routerLink]="['/about']" type="button" label="" icon="pi pi-info-circle" class="p-button-text"></button>
+  </div>
+  <div class="grid" style="position: fixed; left: 0; bottom: 0; width: 2.5rem; margin-left: 1rem; margin-bottom: 1rem">
+    <p-button label=""  type="button" icon="pi pi-sign-out" (onClick)="logoutEventEmit()" class="vertical-align-bottom"></p-button>
+  </div>
+
+</div>

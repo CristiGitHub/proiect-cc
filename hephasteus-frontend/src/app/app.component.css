@@ -1,0 +1,21 @@
+.expanded {
+  width: calc(100% - 20rem);
+  position: absolute;
+  left: 20rem;
+  margin-top: 1rem;
+}
+
+.notExtended{
+  width: calc(100% - 8.5rem);
+  position: absolute;
+  margin-left: 5.5rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+}
+
+.buttonNavbar{
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: 20rem;
+}

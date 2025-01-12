@@ -1,0 +1,46 @@
+<p-card styleClass="p-card-shadow">
+  <ng-template pTemplate="header">
+    <div class="grid">
+      <div class="col-12 md:col-12 lg:col-6 mt-2">
+        <label class="p-card-title ml-3 " [routerLink]="['/clothing/'+clothing.id]">{{clothing.name}}</label>
+      </div>
+      <div class="col-1 md:col-1 lg:col-3">
+      </div>
+      <div class="col-12 md:col-12 lg:col-3">
+        <button pButton [routerLink]="['/clothing/'+clothing.id]" type="button" label="" icon="pi pi-pencil" class="p-button"></button>
+      </div>
+    </div>
+
+  </ng-template>
+<div class="grid">
+  <div class="col-12 md:col-6 lg:col-4">
+    <label for="category">Category:</label>
+    <span class="p-float-label">
+    <span id="category">{{clothing.clothesCategory.name}}</span>
+        </span>
+  </div>
+  <div class="col-12 md:col-6 lg:col-4">
+    <label for="brand">Brand:</label>
+    <span class="p-float-label">
+            <span id="brand">{{clothing.clothesBrand.name}}</span>
+        </span>
+  </div>
+</div>
+<div class="grid mt-2">
+  <div class="col-3 md:col-3 lg:col-3" *ngFor="let color of clothing?.colors; index as i" >
+    <label for="color_{{i}}">Color {{i+1}}:</label>
+
+    <span class="p-float-label">
+          <p-colorPicker [disabled]="true" [(ngModel)]="clothing.colors[i]"  id="color_{{i}}" ></p-colorPicker>
+        </span>
+  </div>
+</div>
+<div class="grid mt-3">
+  <div class="col-12 md:col-6 lg:col-4">
+    <label for="description">Description:</label>
+    <span class="p-float-label">
+          <span  id="description">{{clothing.description}}</span>
+        </span>
+  </div>
+</div>
+</p-card>

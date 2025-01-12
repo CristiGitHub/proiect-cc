@@ -1,0 +1,18 @@
+.my-custom-image {
+    max-width: 480px;
+    max-height: 260px;
+    overflow: hidden;
+}
+.my-custom-image p-image img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 10px; /* optional, to prevent card from sticking to the edge of the screen */
+}

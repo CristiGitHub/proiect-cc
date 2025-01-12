@@ -1,0 +1,81 @@
+<p-card *ngIf="state==0">
+    <div class="grid">
+        <div  *ngIf="state==0" class="col-12 md:col-12 lg:col-12">
+            <p-fileUpload name="myfile[]"
+                          url=""
+                          [customUpload]="true"
+                          (uploadHandler)="trimite($event)"
+                          (onRemove)="deleteUplodImage($event)"
+                          [auto]="true">
+            </p-fileUpload>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="grid mt-3">
+            <div class="col-12 md:col-6 lg:col-3">
+                <p-button [disabled]="image==undefined || image==null" label="Submit" (onClick)="onSubmitClothes()"></p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-card>
+<div class="container" *ngIf="state>=1">
+<p-card  header="{{this.clothing.clothesCategory}}" subheader="{{this?.clothing?.clothesBrand?.name}}" [style]="{ width: '560px' }">
+    <ng-template pTemplate="header" >
+        <div class="my-custom-image">
+            <p-image [src]="clothing.image" alt="Image" [preview]="true"></p-image>
+        </div>
+    </ng-template>
+    <div class="grid">
+    <div *ngIf="state>=1" class="col-12 md:col-6 lg:col-3">
+        <span class="p-float-label">
+            <input type="text"  id="nume" pInputText class="p-inputgroup" [(ngModel)]="clothing.name">
+            <label for="nume">Name</label>
+        </span>
+    </div>
+    <div *ngIf="state>=1" class="col-12 md:col-4 lg:col-3">
+        <span class="p-float-label">
+            <p-dropdown [options]="clothesCategoryList" [(ngModel)]="clothing.clothesCategory" id="category"></p-dropdown>
+            <label for="category">Category</label>
+        </span>
+    </div>
+    <div *ngIf="state>=1" class="col-12 md:col-4 lg:col-3">
+        <span class="p-float-label">
+            <p-dropdown [options]="sizeCharter" [(ngModel)]="clothing.size" id="size"></p-dropdown>
+            <label for="brand">Sizes</label>
+        </span>
+    </div>
+    <div *ngIf="state>=1" class="col-12 md:col-4 lg:col-3">
+        <span class="p-float-label">
+            <p-dropdown [options]="clothesBrandList" [(ngModel)]="clothing.clothesBrand" id="brand" optionLabel="name"></p-dropdown>
+            <label for="brand">Brand</label>
+        </span>
+    </div>
+    </div>
+    <div *ngIf="state>=1" class="grid mt-2">
+        <div *ngIf="state==2" class="col-12 md:col-4 lg:col-4">
+            <label for="availability">Availability</label>
+            <p-inputSwitch [(ngModel)]="clothing.availability" id="availability"></p-inputSwitch>
+        </div>
+    </div>
+    <div *ngIf="state>=1" class="grid mt-2">
+        <div class="col-12 md:col-6 lg:col-6">
+            <span class="p-float-label">
+                <textarea [rows]="5" [cols]="30" id="description" pInputTextarea  [autoResize]="true" [(ngModel)]="clothing.description"></textarea>
+                <label for="description">Description</label>
+            </span>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="grid mt-3">
+            <div class="col-12 md:col-6 lg:col-3">
+                <p-button label="Submit" (onClick)="onSubmitClothes()"></p-button>
+            </div>
+
+            <div *ngIf="state>=1 && clothing.id!=undefined && clothing.id!=''" class="col-12 md:col-6 lg:col-3">
+                <p-button label="Delete" styleClass="p-button-danger" (onClick)="onDeleteClothes()"></p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-card>
+</div>
+<p-toast></p-toast>

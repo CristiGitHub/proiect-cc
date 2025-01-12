@@ -1,0 +1,60 @@
+<!--<form [formGroup]="form">-->
+<p-card   header="Outfit-Crator" subheader="" [style]="{ width: '100%' }">
+<div class="grid">
+    <div class="col:12 md:col-4 lg:col-4">
+        <span class="p-float-label">
+            <input required type="text"  id="nume" pInputText class="p-inputgroup" [(ngModel)]="savedOutfit.name">
+            <label for="nume">Name</label>
+        </span>
+    </div>
+    <div class="col:12 md:col-4 lg:col-4">
+        <span class="p-float-label">
+            <p-dropdown [options]="occasionEnum" [(ngModel)]="savedOutfit.occasion" optionLabel="value" optionValue="label" id="occasion"></p-dropdown>
+            <label for="occasion">Category</label>
+        </span>
+    </div>
+    <div class="col:12 md:col-4 lg:col-4">
+        <span class="p-float-label">
+            <p-dropdown [options]="seasonEnum" [(ngModel)]="savedOutfit.season" optionLabel="value" optionValue="label"  id="season"></p-dropdown>
+            <label for="season">Category</label>
+        </span>
+    </div>
+</div>
+    <p-pickList [source]="clothesList" [target]="savedOutfit.clothes" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '30rem' }"
+            [targetStyle]="{ height: '30rem' }" filterBy="name" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" breakpoint="1400px">
+    <ng-template let-clothes pTemplate="item" >
+        <div class="flex flex-wrap p-2 align-items-center gap-3" >
+            <img class="w-4rem shadow-2 flex-shrink-0 border-round" [src]="clothes.image" alt="{item.name}" />
+            <div class="flex-1 flex flex-column gap-2">
+                <span class="font-bold">{{ clothes?.name }}</span>
+                <div class="flex align-products-center gap-2">
+                    <span>Size: {{ clothes?.size }}</span>
+                </div>
+                <div class="flex align-products-center gap-2">
+                    <i class="pi pi-tag text-sm"></i>
+                    <span>{{ clothes?.clothesCategory }}</span>
+                </div>
+
+            </div>
+            <div class="flex-2 flex flex-column  gap-2">
+                <div class="flex align-products-right gap-2">
+                    <span class="font-bold text-900">{{ clothes?.clothesBrand?.name }}</span>
+                </div>
+                <div class="flex align-products-right gap-2">
+                <p-tag [value]="getAvailabilityText(clothes.availability)" [severity]="getSeverity(clothes.availability)"></p-tag>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-pickList>
+<div class="grid mt-4 ml-3">
+    <div class="col-12 md:col-6 lg:col-3">
+        <p-button label="Submit" (onClick)="submitOutfit()"></p-button>
+    </div>
+    <div *ngIf="savedOutfit.id!=undefined && savedOutfit.id!=''" class="col-12 md:col-6 lg:col-3">
+        <p-button styleClass="p-button-danger" label="Delete" (onClick)="deleteOutfit()"></p-button>
+    </div>
+</div>
+</p-card>
+<!--</form>-->
+<p-toast></p-toast>

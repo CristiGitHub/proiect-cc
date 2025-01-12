@@ -1,0 +1,63 @@
+<p-dataView #dv [value]="confirmationDataSetList">
+    <ng-template let-confirmation pTemplate="listItem">
+        <div class="col-12">
+            <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+                <img class="w-9 sm:w-16rem xl:w-8rem shadow-2 block xl:block mx-auto border-round" [src]="confirmation.image" [alt]="confirmation.id" />
+                <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                        <div class="text-2xl font-bold text-900">Confirmation Id: {{ confirmation.id }}</div>
+                        <div class="text-2xl font-bold text-900">Added by user:{{ confirmation.addedUserId }}</div>
+                        <!--              <p-rating [(ngModel)]="product.rating" [readonly]="true" [cancel]="false"></p-rating>-->
+                        <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag"></i>
+                                <span class="font-semibold">Category: {{ confirmation.category }}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                        <button (click)="showDialog(confirmation)" pButton icon="pi pi-pencil" class="md:align-self-end mb-2 p-button-rounded"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-dataView>
+<p-dialog header="" [(visible)]="visable" [style]="{width: '50vw' , height:'45vw'}">
+    <div *ngIf="confirmationDataSet!= undefined && confirmationDataSet?.id!=undefined && confirmationDataSet?.id!=null">
+    <p-card  header="{{this.confirmationDataSet?.id}}" subheader="{{this?.confirmationDataSet?.category}}" [style]="{ width: '100%' }">
+        <ng-template pTemplate="header" >
+            <div class="my-custom-image">
+                <p-image [src]="confirmationDataSet.image" alt="Image" [preview]="true"></p-image>
+            </div>
+        </ng-template>
+        <div class="grid">
+            <div class="col-12 md:col-12 lg:col-6">
+        <span class="p-float-label">
+            <input type="text"  id="nume" pInputText class="p-inputgroup" [(ngModel)]="confirmationDataSet.addedUserId">
+            <label for="nume">Created By</label>
+        </span>
+            </div>
+            <div  class="col-12 md:col-12 lg:col-6">
+        <span class="p-float-label">
+            <p-dropdown [options]="clothesCategoryList" [(ngModel)]="confirmationDataSet.category" id="category"></p-dropdown>
+            <label for="category">Category</label>
+        </span>
+            </div>
+        </div>
+
+
+        <ng-template pTemplate="footer">
+            <div class="grid mt-3">
+                <div class="col-12 md:col-6 lg:col-6">
+                    <p-button label="Submit" (onClick)="updateConfirmationDataSet()"></p-button>
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-6">
+                    <p-button label="Delete" styleClass="p-button-danger" (onClick)="deleteConfirmationDataSet()"></p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-card>
+    </div>
+</p-dialog>

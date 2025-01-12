@@ -1,0 +1,41 @@
+<p-card header="Saved Outfits">
+    <div class="grid">
+    <div *ngFor="let outfit of savedOutfit" class="col:12 md:col-6 lg:col-4">
+<p-card   header="{{outfit?.name}}" subheader="{{'Ocassion: ' + outfit?.occasion}}" [style]="{ width: '100%' }">
+    <div class="flex-2 flex flex-column gap-2">
+        <div class="flex align-products-right gap-2">
+            <span class="font-bold">Season: {{ outfit?.season }}</span>
+        </div>
+    </div>
+    <p-scroller [items]="outfit.clothes" [itemSize]="50" scrollHeight="200px" styleClass="border-1 surface-border" >
+        <ng-template let-clothes pTemplate="item" >
+            <div class="flex flex-wrap p-2 align-items-center gap-3" >
+                <img class="w-4rem shadow-2 flex-shrink-0 border-round" [src]="clothes.image" alt="{item.name}" />
+                <div class="flex-1 flex flex-column gap-2">
+                    <span class="font-bold">{{ clothes?.name }}</span>
+                    <div class="flex align-products-center gap-2">
+                        <span>Size: {{ clothes?.size }}</span>
+                    </div>
+                    <div class="flex align-products-center gap-2">
+                        <i class="pi pi-tag text-sm"></i>
+                        <span>{{ clothes?.clothesCategory }}</span>
+                    </div>
+                </div>
+                <div class="flex-2 flex flex-column  gap-2">
+                    <div class="flex align-products-right gap-2">
+                        <span class="font-bold text-900">{{ clothes?.clothesBrand?.name }}</span>
+                    </div>
+                    <div class="flex align-products-right gap-2">
+                        <p-tag [value]="getAvailabilityText(clothes.availability)" [severity]="getSeverity(clothes.availability)"></p-tag>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-scroller>
+    <ng-template pTemplate="footer">
+        <p-button label="Edit" [routerLink]="['/outfits-creator/'+outfit.id]" icon="pi pi-external-link"></p-button>
+    </ng-template>
+</p-card>
+    </div>
+    </div>
+</p-card>
