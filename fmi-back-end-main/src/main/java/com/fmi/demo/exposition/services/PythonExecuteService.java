@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-public class PythonExecuteService {
+public class  PythonExecuteService {
 
     @Value("${phython.server-url}")
     String pythonServerUrl;
