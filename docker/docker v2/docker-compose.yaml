@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_MULTIPLE_DATABASES: hephaestus,keycloak,test
+      POSTGRES_MULTIPLE_DATABASES: hephaestus,keycloak,admindb
     ports:
       - "5432:5432"
 
@@ -26,13 +26,17 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
 
+      KEYCLOAK_LOGLEVEL: TRACE
+      KEYCLOAK_LOG_CONSOLE_LEVEL: DEBUG
+
       KEYCLOAK_IMPORT: /tmp/realm-export.json
 
     volumes:
       - ./realm-export.json:/tmp/realm-export.json
     ports:
       - "8080:8080"
-
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # Adds the host.docker.internal mapping
     depends_on:
       - postgres
 
@@ -48,5 +52,61 @@ services:
     volumes:
       - /Users/ioancristianlefter/Faculta/licenta/docker/docker v2/files:/data
 
+  python-service:
+    build:
+      context: ../../ai
+      dockerfile: ./Dockerfile
+    container_name: ai-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
 
-    
+  java-service:
+    build:
+      context: ../../fmi-back-end-main
+      dockerfile: Dockerfile
+    container_name: java-service
+    volumes:
+      - ~/.m2:/root/.m2 # Mount local .m2 repository to Docker container
+    platform: linux/amd64 # Specify platform here
+    ports:
+      - "8085:8085"
+      - "5005:5005"
+    environment:
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
+    depends_on:
+      - postgres
+      - keycloak
+
+  admin-service:
+    build:
+      context: ../../admin-backend
+      dockerfile: Dockerfile
+    container_name: admin-service
+    volumes:
+      - ~/.m2:/root/.m2 # Mount local .m2 repository to Docker container
+    platform: linux/amd64 # Specify platform here
+    ports:
+      - "8086:8086"
+    environment:
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
+    depends_on:
+      - postgres
+      - keycloak
+
+  backend-image:
+    build:
+      context: ../../backend-image
+      dockerfile: Dockerfile
+    container_name: backend-image
+    volumes:
+      - ~/.m2:/root/.m2 # Mount local .m2 repository to Docker container
+    platform: linux/amd64 # Specify platform here
+    ports:
+      - "8087:8087"
+    environment:
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
+    depends_on:
+      - minio
+      - keycloak

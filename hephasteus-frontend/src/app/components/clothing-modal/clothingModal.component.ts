@@ -52,9 +52,11 @@ export class ClothingModalComponent implements OnInit{
 
   loadClothing(id:string){
       this.id=id;
+      console.log(this.clothing.imageUrl)
       this.clothesService.getClothing(id).subscribe(value => {
           this.clothing=value;
           this.getImage(this.clothing.imageUrl).subscribe(response=>{
+              console.log(response)
               this.clothing.image=response;
           })
           if( this.clothing.name.includes("Temp")){
@@ -114,7 +116,7 @@ export class ClothingModalComponent implements OnInit{
 
 
     getImage(imageName: string): Observable<string> {
-        return this.http.get(`http://localhost:8085/images/${imageName}`, { responseType: 'text' });
+        return this.http.get(`http://localhost:8087/images/${imageName}`, { responseType: 'text' });
     }
 
 

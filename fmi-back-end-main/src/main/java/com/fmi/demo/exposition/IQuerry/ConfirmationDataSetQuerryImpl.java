@@ -1,5 +1,6 @@
 package com.fmi.demo.exposition.IQuerry;
 
+import com.fmi.demo.domain.model.Clothing;
 import com.fmi.demo.domain.model.ConfirmationDataSet;
 import com.fmi.demo.domain.repository.ConfirmationDataSetRepository;
 import com.fmi.demo.exposition.services.MinioService;

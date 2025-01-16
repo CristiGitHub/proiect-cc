@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-public class  PythonExecuteService {
+public class PythonExecuteService {
 
     @Value("${phython.server-url}")
     String pythonServerUrl;
@@ -27,7 +27,9 @@ public class  PythonExecuteService {
     public String proxiClassify(String imageUrl){
         String fastApiUrl = pythonServerUrl+"/classify/?image_url=" + imageUrl;
         try{
+            System.out.println("fastApiUrl: " + fastApiUrl);
         ResponseEntity<String> response = restTemplate.getForEntity(fastApiUrl, String.class);
+            System.out.println(response.getBody());
         return response.getBody();
         }
         catch (Exception e){

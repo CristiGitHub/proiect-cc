@@ -1,0 +1,50 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: off
+  application:
+    name: IMAGE-BACKEND
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/auth/realms/demo
+          jwk-set-uri: http://keycloak:8080/auth/realms/demo/protocol/openid-connect/certs
+          # audience: none
+
+server:
+  port: 8087
+
+minio:
+  endpoint: http://minio:9000
+  access-key: admin
+  secret-key: adminadmin
+  bucket-name: clothes
+
+keycloak:
+  auth-server-url: http://keycloak:8080/auth/
+  realm: demo
+  resource: resource-spring
+  credentials:
+    secret: xr9U2kbAP6A4gGVjX4Kzy7EGrueQHQ6H
+  security-constraints:
+    - authRoles:
+        - user
+      securityCollections:
+        - patterns:
+            - /*
+  cors: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+        boot:
+          autoconfigure: DEBUG
+      web:
+        filter: TRACE
+      keycloak:
+        adapters: TRACE
+
+

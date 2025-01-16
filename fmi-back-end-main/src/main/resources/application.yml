@@ -5,28 +5,30 @@ spring:
   application:
     name: API-FMI
   datasource:
-    url: jdbc:postgresql://localhost:5432/hephaestus
+    url: jdbc:postgresql://postgres:5432/hephaestus
     driveClassName: org.postgresql.Driver
     username: admin
     password: admin
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-    locations: filesystem:flyway/db
+#  flyway:
+#    enabled: true
+#    baseline-on-migrate: true
+#    locations: filesystem:flyway/db
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/auth/realms/demo
-          jwk-set-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:8080/auth/realms/demo
+          jwk-set-uri: http://keycloak:8080/auth/realms/demo/protocol/openid-connect/certs
+          # audience: none
+
   jpa:
     show-sql: true
     open-in-view: false
     properties:
       hibernate:
         show_sql: true
-#        hbm2ddl:
-#          auto: create-drop
+        hbm2ddl:
+          auto: create-drop
 
 #keycloak:
 #  auth-server-url: http://localhost:8080/auth
@@ -38,13 +40,13 @@ server:
   port: 8085
 
 minio:
-  endpoint: http://localhost:9000
+  endpoint: http://minio:9000
   access-key: admin
   secret-key: adminadmin
   bucket-name: clothes
 
 keycloak:
-  auth-server-url: http://localhost:8080/auth/
+  auth-server-url: http://keycloak:8080/auth/
   realm: demo
   resource: resource-spring
   credentials:
@@ -57,8 +59,20 @@ keycloak:
             - /*
   cors: true
 
-
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+        boot:
+          autoconfigure: DEBUG
+      web:
+        filter: TRACE
+      keycloak:
+        adapters: TRACE
 
 phython:
-  server-url: http://127.0.0.1:8000
+  server-url: http://ai-service:8000
+admin-db:
+  server-url: http://admin-service:8086
 

@@ -70,7 +70,7 @@ max_size = 1000  # Set the maximum dimension you want for the resized image
 
 
 minio_client = Minio(
-    "localhost:9000",
+    "minio:9000",
     access_key="admin",
     secret_key="adminadmin",
     secure=False,
@@ -156,9 +156,11 @@ async def classify_image(image_url: str, category: str) -> bool:
 
 @app.get("/classify/")
 async def classify_image(image_url: str) -> str:
+    print("salut!")
     data = minio_client.get_object(bucket_name, image_url)
     content = io.BytesIO(data.read())
     content.seek(0)
+    print("salut2!")
     img_array = read_image(content.getvalue())
     predictions = prediction(img_array)
     if predictions:
@@ -168,5 +170,5 @@ async def classify_image(image_url: str) -> str:
 
 if __name__ == "__main__":
     import uvicorn
-
+    print("salut!")
     uvicorn.run(app, host="127.0.0.1", port=8000)
